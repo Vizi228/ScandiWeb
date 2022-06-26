@@ -1,0 +1,93 @@
+.header {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .items_list {
+        color: white;
+        display: flex;
+        align-items: center;
+        color: #1D1F22;
+
+        .categories_item {
+            font-size: 18px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .active {
+            color: #5ECE7B;
+            border-bottom: 2px solid #5ECE7B;
+        }
+    }
+
+    .cart_menu {
+        display: flex;
+
+        .currency_wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 500;
+            position: relative;
+            width: 150px;
+
+            svg {
+                transition: all 1s;
+            }
+
+            .currency {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                overflow: hidden;
+                align-items: center;
+                max-height: 0px;
+                transition: all 1s;
+                box-shadow: 0px 4px 35px 0px #A8ACB030;
+
+                span {
+                    text-align: center;
+                    padding: 8px 38px 8px 20px;
+                    width: 100%;
+                }
+
+                span:hover {
+                    background-color: #EEEEEE;
+                    cursor: pointer;
+                }
+            }
+
+            .currency_button {
+                z-index: 100;
+                cursor: pointer;
+                user-select: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 10px;
+
+                svg {
+                    margin-left: 10px;
+                }
+            }
+
+            .currency_active {
+                max-height: 150px;
+                transform: translateY(90px);
+
+            }
+
+            .currency_icon {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}

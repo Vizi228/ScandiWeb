@@ -16,6 +16,11 @@ const clothesReducer = (state = clothesState, action) => {
                 ...state,
                 activeCategory: action.payload
             }
+        case 'SET_ITEMS':
+            return {
+                ...state,
+                items: action.payload
+            }
         default:
             return state
     }

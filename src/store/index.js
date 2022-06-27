@@ -5,6 +5,8 @@ import productReducer from './reducers/productReducer';
 
 const reducers = combineReducers({
     clothesReducer,
+    cartReducer,
+    productReducer
 })
 
 const store = createStore(reducers);

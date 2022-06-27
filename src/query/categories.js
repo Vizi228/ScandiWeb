@@ -16,36 +16,23 @@ export const GET_CATEGORIES_DATA = gql`
           }
     }
 `
-export const GET_DATA = gql`
+export const GET_DATA = (title) => (gql`
         query {
-            categories {
+            category(input: {title: "${title}"}) {
             name
             products {
                 id
                     name
                     inStock
                     gallery
-                    description
-                    category
-                    attributes {
-                id
-                name
-                type
-                items {
-                    displayValue
-                    value
-                    id
-                }
-                }
                     prices {
-                currency {
-                    label
-                    symbol
-                }
-                 amount
-                }
-                    brand
+                        currency {
+                            label
+                            symbol
+                        }
+                        amount
+                    }
              }
             }
         }
-`   
+`)   

@@ -4,30 +4,27 @@ import { gql } from "@apollo/client";
 export const GET_PRODUCT = (id) => gql`
 query {
     product(id: "${id}") {
-      id
-			name
-			inStock
-			gallery
-			description
-			category
-			attributes {
         id
-        name
-        type
-        items {
-          displayValue
-          value
-          id
+		name
+		inStock
+		gallery
+		description
+		category
+		attributes {
+            name
+            items {
+                displayValue
+                value
+            }
         }
-      }
-			prices {
-        currency {
-          label
-          symbol
+		prices {
+            currency {
+                label
+                symbol
+            }
+            amount
         }
-        amount
-      }
-			brand
+		brand
     }
 }
 `

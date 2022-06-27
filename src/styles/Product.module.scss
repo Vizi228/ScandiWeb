@@ -1,20 +1,37 @@
 .wrapper {
     display: flex;
     justify-content: space-between;
+    height: 89.7vh;
 }
 
 .images {
-    width: 10%;
+    width: 12%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    max-height: 100%;
+    overflow: auto;
 
     img {
         margin-top: 10px;
+        cursor: pointer;
     }
+}
+
+.images::-webkit-scrollbar {
+    width: 5px;
+}
+
+.images::-webkit-scrollbar-thumb {
+    width: 100%;
+    background-color: rgba($color: #665a5a, $alpha: 0.5);
+    border-radius: 20px;
 }
 
 .mainImage {
     width: 35%;
+    display: flex;
+    align-items: center;
 
     img {
         width: 100%;
@@ -23,4 +40,68 @@
 
 .description {
     width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h1 {
+        margin: 8px 0;
+    }
+}
+
+.attributes {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    ul {
+        padding: 0;
+        display: flex;
+        flex-wrap:wrap;
+        width: 100%;
+    }
+
+    button {
+        background-color: #fff;
+        list-style: none;
+        padding: 14px 23px;
+        border: 1px #1D1F22 solid;
+        cursor: pointer;
+        margin-right: 15px;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        opacity: 0.7;
+    }
+
+    button.active {
+        background-color: #1D1F22;
+        color: #fff;
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+.addButton {
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #5ECE7B;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 16px 0;
+    transition: all 0.3s;
+}
+
+.addButton:hover {
+    opacity: 0.8;
+}
+
+.desc {
+    margin: 40px 0;
+    width: 100%;
 }

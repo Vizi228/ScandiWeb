@@ -39,7 +39,7 @@ export class CartBagItem extends Component {
           <button onClick={() => this.props.onHandleDecrement(this.props.item)}>-</button>
         </div>
         <div className={styles.image}>
-          <img src={this.props.image} alt="icon" />
+          <img src={this.props.image[0]} alt="icon" />
         </div>
       </div>
     );

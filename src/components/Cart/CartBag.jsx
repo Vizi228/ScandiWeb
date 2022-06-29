@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styles from '../../styles/Cart.module.scss';
 import { getCartCount, getCartTotal, getCurrentAmount } from '../../utils';
 import CartBagItem from './CartBagItem';
@@ -11,6 +12,16 @@ export class CartBag extends Component {
     this.getCartCount = getCartCount.bind(this);
     this.getCurrentAmount = getCurrentAmount.bind(this);
     this.getCartTotal = getCartTotal.bind(this);
+    this.onHandleCheckOut = this.onHandleCheckOut.bind(this);
+  }
+
+  onHandleCheckOut() {
+    if (this.props.cartItems.length > 0) {
+      this.props.onCheckOut();
+      alert('Check out successful');
+    } else {
+      alert('Choose the product');
+    }
   }
 
   render() {
@@ -25,9 +36,9 @@ export class CartBag extends Component {
           <span>My Bag.</span> {count} items
         </div>
         <div className={styles.cartBag_items}>
-          {this.props.cartItems?.map((item) => (
+          {this.props.cartItems?.map((item, i) => (
             <CartBagItem
-              key={[item.name, item.activeAttribute]}
+              key={[item.name, item.activeAttribute, i]}
               cartItems={this.props.cartItems}
               activeCurrency={this.props.activeCurrency}
               {...item}
@@ -44,8 +55,18 @@ export class CartBag extends Component {
             </p>
           </div>
           <div className={styles.total_item}>
-            <button className={[styles.link, styles.button].join(' ')}>View bag</button>
-            <button className={[styles.checkOut, styles.button].join(' ')}>Check Out</button>
+            <Link to="/Cart">
+              <button
+                className={[styles.link, styles.button].join(' ')}
+                onClick={this.props.onHandleIcon}>
+                View bag
+              </button>
+            </Link>
+            <button
+              className={[styles.checkOut, styles.button].join(' ')}
+              onClick={() => this.onHandleCheckOut()}>
+              Check Out
+            </button>
           </div>
         </div>
       </div>
@@ -59,6 +80,9 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    onCheckOut: () => dispatch({ type: 'CLEAR_CART' }),
+    onHandleIcon: () => dispatch({ type: 'ON_HANDLE_CART' }),
+  };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartBag);

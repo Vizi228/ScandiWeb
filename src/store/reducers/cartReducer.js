@@ -28,6 +28,12 @@ const cartReducer = (state = cartState, action) => {
                 ...state,
                 items: getReducerItem(state, action, -1),
             }
+        case 'CLEAR_CART' :
+            return {
+                ...state,
+                items: [],
+                isVisibleOverlay: false,
+            }
         default:
             return state
     }

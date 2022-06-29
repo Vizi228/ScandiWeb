@@ -15,7 +15,7 @@ export class Category extends Component {
         <h1 style={{ textTransform: 'uppercase' }}>{items.name}</h1>
         <div className={styles.container}>
           {items.products?.map((item) => (
-            <CategoryItem key={item.id} {...item} />
+            <CategoryItem key={item.id} {...item} product={item} />
           ))}
         </div>
       </>
@@ -28,8 +28,4 @@ const mapStateToProps = (state) => {
     activeCategory: state.clothesReducer.activeCategory,
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(mapStateToProps)(Category);

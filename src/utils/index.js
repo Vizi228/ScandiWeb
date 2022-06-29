@@ -27,19 +27,37 @@ export function getCartTotal() {
 }
 
 export function onAddtoCart() {
-    const compareItem = this.props.cartItems.find(item => 
-      item.name === this.state.product.name &&
-      item.activeAttribute === this.state.activeAttribute
-    )
-    const object = {
-      brand: this.state.product.brand,
-      name: this.state.product.name,
-      image: this.state.product?.gallery[0],
-      attributes: this.state.product.attributes,
-      prices: this.state.product.prices,
-      activeAttribute: this.state.activeAttribute,
-      count: 1,
-    };
+    let compareItem
+    let object
+    if(this.props.product) {
+      compareItem = this.props.cartItems.find(item => 
+        item.name === this.props.product.name
+      )
+      object = {
+        brand: this.props.product.brand,
+        name: this.props.product.name,
+        image: this.props.product?.gallery,
+        attributes: this.props.product.attributes,
+        prices: this.props.product.prices,
+        count: 1,
+      };
+    }
+    if(this.state?.product) {
+      compareItem = this.props.cartItems.find(item => 
+        item.name === this.state.product.name &&
+        item.activeAttribute === this.state.activeAttribute
+      )
+       object = {
+        brand: this.state.product.brand,
+        name: this.state.product.name,
+        image: this.state.product?.gallery,
+        attributes: this.state.product.attributes,
+        prices: this.state.product.prices,
+        activeAttribute: this.state.activeAttribute,
+        count: 1,
+      };
+    }
+    
     if (compareItem) {
       this.props.incrementToCart(compareItem);
     } else {

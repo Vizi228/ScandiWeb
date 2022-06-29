@@ -24,7 +24,15 @@ export const GET_DATA = (title) => (gql`
                 id
                     name
                     inStock
+                    brand
                     gallery
+                    attributes {
+                        name
+                        items {
+                            displayValue
+                            value
+                        }
+                    }
                     prices {
                         currency {
                             label

@@ -18,28 +18,36 @@ export class Categories extends Component {
   }
 
   async getCategoriesItems(name) {
-    const resData = await this.props.client.query({
-      query: GET_DATA(name),
-    });
-    this.props.onHandleCategories(resData.data.category);
-    this.props.onChangeCategory(name);
+    try {
+      const resData = await this.props.client.query({
+        query: GET_DATA(name),
+      });
+      this.props.onHandleCategories(resData.data.category);
+      this.props.onChangeCategory(name);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getMountItems() {
-    const resData = await this.props.client.query({
-      query: GET_DATA(this.props.activeCategory),
-    });
-    const resCategories = await this.props.client.query({
-      query: GET_CATEGORIES_DATA,
-    });
-    this.setState((state) => {
-      return {
-        ...state,
-        isLoading: resCategories.loading,
-        categories: resCategories.data.categories,
-      };
-    });
-    this.props.onHandleCategories(resData.data.category);
+    try {
+      const resData = await this.props.client.query({
+        query: GET_DATA(this.props.activeCategory),
+      });
+      const resCategories = await this.props.client.query({
+        query: GET_CATEGORIES_DATA,
+      });
+      this.setState((state) => {
+        return {
+          ...state,
+          isLoading: resCategories.loading,
+          categories: resCategories.data.categories,
+        };
+      });
+      this.props.onHandleCategories(resData.data.category);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   onHandleCategory(name) {

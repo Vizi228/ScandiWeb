@@ -9,7 +9,10 @@
     font-family: 'Raleway', sans-serif;
     position: relative;
 }
-
+.App.active {
+    height: 98.4vh;
+    overflow: hidden;
+}
 a {
     color: inherit;
     text-decoration: none;

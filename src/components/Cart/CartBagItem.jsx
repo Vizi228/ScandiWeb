@@ -19,7 +19,7 @@ export class CartBagItem extends Component {
           <h3>{this.props.name}</h3>
           <h3>
             {currency.currency.symbol}
-            {String(currency.amount * this.props.count).split('.')[0]}
+            {currency.amount}
           </h3>
           <div className={styles.attributes}>
             {this.props.attributes.map((item, i) => (

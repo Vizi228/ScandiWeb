@@ -2,6 +2,7 @@ import { getReducerItem } from "../../utils"
 
 const cartState = {
     isVisibleOverlay: false,
+    cartRef: {},
     items: []
 }
 
@@ -33,6 +34,11 @@ const cartReducer = (state = cartState, action) => {
                 ...state,
                 items: [],
                 isVisibleOverlay: false,
+            }
+        case 'SET_CART_REF' :
+            return {
+                ...state,
+                cartRef: action.payload,
             }
         default:
             return state

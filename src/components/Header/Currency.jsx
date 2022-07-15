@@ -18,6 +18,10 @@ export class Currency extends Component {
   }
 
   onHadleVisible() {
+    if (this.props.isVisibleOverlay) {
+      alert('Close the Cart to open the Currency switcher');
+      return;
+    }
     this.setState((state) => {
       return {
         ...state,
@@ -54,9 +58,7 @@ export class Currency extends Component {
     if (this.props.data.loading) {
       return;
     }
-
     const currencies = this.props.data.currencies;
-
     return (
       <div onClick={(e) => this.onClickOutside(e)} className={styles.currency_wrapper}>
         <span
@@ -88,6 +90,7 @@ export class Currency extends Component {
 const mapStateToProps = (state) => {
   return {
     activeCurrency: state.clothesReducer.activeCurrency,
+    isVisibleOverlay: state.cartReducer.isVisibleOverlay,
   };
 };
 const mapDispatchToProps = (dispatch) => {

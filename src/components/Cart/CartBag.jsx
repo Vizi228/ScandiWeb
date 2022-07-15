@@ -31,7 +31,7 @@ export class CartBag extends Component {
     const count = this.getCartCount();
     const total = this.getCartTotal();
     return (
-      <div className={styles.cartBag}>
+      <div className={styles.cartBag} ref={this.props.bagRef}>
         <div className={styles.cartBag_title}>
           <span>My Bag.</span> {count} items
         </div>

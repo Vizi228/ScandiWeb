@@ -3,7 +3,7 @@ import styles from '../../styles/Header.module.scss';
 import { connect } from 'react-redux';
 import { withApollo } from '@apollo/client/react/hoc';
 import { GET_CATEGORIES_DATA, GET_DATA } from '../../query/categories';
-
+import { Link, withRouter } from 'react-router-dom';
 export class Categories extends Component {
   constructor(props) {
     super(props);
@@ -31,9 +31,6 @@ export class Categories extends Component {
 
   async getMountItems() {
     try {
-      const resData = await this.props.client.query({
-        query: GET_DATA(this.props.activeCategory),
-      });
       const resCategories = await this.props.client.query({
         query: GET_CATEGORIES_DATA,
       });
@@ -44,7 +41,6 @@ export class Categories extends Component {
           categories: resCategories.data.categories,
         };
       });
-      this.props.onHandleCategories(resData.data.category);
     } catch (error) {
       console.log(error);
     }
@@ -62,18 +58,19 @@ export class Categories extends Component {
       return;
     }
     const categories = this.state.categories;
+    const location = this.props.location.pathname.split('/')[2];
     return (
       <>
         {categories?.map((item, i) => (
-          <span
-            onClick={() => this.onHandleCategory(item.name)}
-            key={item.name}
-            className={[
-              styles.categories_item,
-              item.name === this.props.activeCategory ? styles.active : '',
-            ].join(' ')}>
-            {item.name}
-          </span>
+          <Link key={item.name} to={`/categories/${item.name}`}>
+            <span
+              onClick={() => this.onHandleCategory(item.name)}
+              className={[styles.categories_item, item.name === location ? styles.active : ''].join(
+                ' ',
+              )}>
+              {item.name}
+            </span>
+          </Link>
         ))}
       </>
     );
@@ -92,4 +89,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withApollo(Categories));
+export default connect(mapStateToProps, mapDispatchToProps)(withApollo(withRouter(Categories)));

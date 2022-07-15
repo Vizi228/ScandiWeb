@@ -15,11 +15,7 @@ export class CategoryItem extends Component {
 
   onHandleCart(e) {
     e.preventDefault();
-    if (this.props.product.attributes.length === 0) {
-      this.onAddToCart();
-    } else {
-      alert('Choose the attribute');
-    }
+    this.onAddToCart();
     return;
   }
 
@@ -28,19 +24,21 @@ export class CategoryItem extends Component {
     const inStock = this.props.inStock;
     return (
       <div className={[styles.categoryItem, inStock ? styles.outHover : ''].join(' ')}>
-        {inStock ? (
-          ''
-        ) : (
-          <div className={styles.wrapper}>
-            <div className={styles.outOfStock}></div>
-            <p className={styles.outStockTitle}>Out of stock</p>
-          </div>
-        )}
-        <Link to={inStock ? `/Product/${this.props.id}` : ''}>
+        <Link to={`/product/${this.props.id}`}>
+          {inStock ? (
+            ''
+          ) : (
+            <div className={styles.wrapper}>
+              <div className={styles.outOfStock}></div>
+              <p className={styles.outStockTitle}>Out of stock</p>
+            </div>
+          )}
           <div className={styles.image}>
             <img src={this.props.gallery[0]} alt="" />
           </div>
-          <p>{this.props.name}</p>
+          <p>
+            {this.props.brand} {this.props.name}
+          </p>
           <p className={styles.price}>
             {price.currency.symbol}
             {price.amount}

@@ -12,9 +12,13 @@ export class Header extends Component {
   constructor(props) {
     super(props);
 
+    this.cartRef = React.createRef();
     this.getCount = getCartCount.bind(this);
   }
 
+  componentDidMount() {
+    this.props.onSetCartRef(this.cartRef);
+  }
   render() {
     return (
       <div className={styles.header}>
@@ -22,13 +26,13 @@ export class Header extends Component {
           <Categories />
         </div>
         <div className={styles.logo}>
-          <Link to="/">
+          <Link to="/all">
             <Logo />
           </Link>
         </div>
         <div className={styles.cart_menu}>
           <Currency />
-          <div onClick={this.props.onHandleIcon} className={styles.cart}>
+          <div ref={this.cartRef} onClick={this.props.onHandleIcon} className={styles.cart}>
             <span className={styles.total}>{this.getCount()}</span>
             <Cart />
           </div>
@@ -46,6 +50,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onHandleIcon: () => dispatch({ type: 'ON_HANDLE_CART' }),
+    onSetCartRef: (payload) => dispatch({ type: 'SET_CART_REF', payload }),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

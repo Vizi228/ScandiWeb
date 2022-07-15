@@ -1,9 +1,3 @@
-export function getDescription() {
-    let tempNode = document.createElement('div');
-    tempNode.innerHTML = this.state.product.description;
-    return tempNode.innerText
-}
-
 export function getCurrentAmount() {
     if (this.props.prices) {
         return this.props.prices.find(item => item.currency.label === this.props.activeCurrency)
@@ -30,22 +24,29 @@ export function onAddtoCart() {
     let compareItem
     let object
     if(this.props.product) {
+      const activeAttribute = this.props.attributes.map(() => 0)
       compareItem = this.props.cartItems.find(item => 
-        item.name === this.props.product.name
+        item.name === this.props.product.name &&
+        item.activeAttribute.every((item, i) => item === activeAttribute[i])
       )
       object = {
         brand: this.props.product.brand,
         name: this.props.product.name,
         image: this.props.product?.gallery,
         attributes: this.props.product.attributes,
+        activeAttribute: activeAttribute,
         prices: this.props.product.prices,
         count: 1,
       };
     }
     if(this.state?.product) {
+      if(!this.state?.product.inStock) {
+        alert('Product out of stock')
+        return
+      }
       compareItem = this.props.cartItems.find(item => 
         item.name === this.state.product.name &&
-        item.activeAttribute === this.state.activeAttribute
+        item.activeAttribute.every((item, i) => item === this.state.activeAttribute[i])
       )
        object = {
         brand: this.state.product.brand,
@@ -53,11 +54,11 @@ export function onAddtoCart() {
         image: this.state.product?.gallery,
         attributes: this.state.product.attributes,
         prices: this.state.product.prices,
-        activeAttribute: this.state.activeAttribute,
+        activeAttribute: this.state.activeAttribute || [],
         count: 1,
       };
     }
-    
+    console.log(compareItem)
     if (compareItem) {
       this.props.incrementToCart(compareItem);
     } else {

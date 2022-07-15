@@ -1,11 +1,30 @@
+import { withApollo } from '@apollo/client/react/hoc';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CategoryItem from '../components/CategoryItem';
+import { GET_DATA } from '../query/categories';
 import styles from '../styles/Category.module.scss';
 
 export class Category extends Component {
   constructor(props) {
     super(props);
+
+    this.getCategoriesItems = this.getCategoriesItems.bind(this);
+  }
+
+  async getCategoriesItems(name) {
+    try {
+      const resData = await this.props.client.query({
+        query: GET_DATA(name),
+      });
+      this.props.onHandleCategories(resData.data.category);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  componentDidMount() {
+    this.getCategoriesItems('all');
   }
 
   render() {
@@ -28,4 +47,9 @@ const mapStateToProps = (state) => {
     activeCategory: state.clothesReducer.activeCategory,
   };
 };
-export default connect(mapStateToProps)(Category);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onHandleCategories: (payload) => dispatch({ type: 'SET_ITEMS', payload }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(withApollo(Category));

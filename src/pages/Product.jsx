@@ -3,8 +3,9 @@ import { withApollo } from '@apollo/client/react/hoc';
 import { GET_PRODUCT } from '../query/product';
 import styles from '../styles/Product.module.scss';
 import { connect } from 'react-redux';
-import { getCurrentAmount, getDescription, onAddtoCart } from '../utils';
+import { getCurrentAmount, onAddtoCart } from '../utils';
 import Attribute from '../components/Attribute';
+import { withRouter } from 'react-router-dom';
 
 export class Product extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ export class Product extends Component {
     };
 
     this.runQuery = this.runQuery.bind(this);
-    this.getDescription = getDescription.bind(this);
     this.getCurrentAmount = getCurrentAmount.bind(this);
     this.onHandleImage = this.onHandleImage.bind(this);
     this.onHandleAttribute = this.onHandleAttribute.bind(this);
@@ -27,7 +27,7 @@ export class Product extends Component {
 
   async runQuery() {
     const res = await this.props.client.query({
-      query: GET_PRODUCT(window.location.pathname.split('/')[2]),
+      query: GET_PRODUCT(this.props.match.params.id),
     });
     const composeAttributes = res.data.product.attributes.map(() => 0);
     this.setState((state) => {
@@ -69,7 +69,6 @@ export class Product extends Component {
     }
     const productData = this.state.product;
     const currentAmount = this.getCurrentAmount();
-    const description = this.getDescription();
     return (
       <div className={styles.wrapper}>
         <div className={styles.images}>
@@ -117,7 +116,9 @@ export class Product extends Component {
           <button className={styles.addButton} onClick={this.onAddtoCart}>
             Add to Cart
           </button>
-          <p className={styles.desc}>{description}</p>
+          <p
+            className={styles.desc}
+            dangerouslySetInnerHTML={{ __html: this.state.product.description }}></p>
         </div>
       </div>
     );
@@ -138,4 +139,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withApollo(Product));
+export default connect(mapStateToProps, mapDispatchToProps)(withApollo(withRouter(Product)));

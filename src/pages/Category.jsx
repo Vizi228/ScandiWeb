@@ -31,7 +31,7 @@ export class Category extends Component {
     const items = this.props.products;
     return (
       <>
-        <h1 style={{ textTransform: 'uppercase' }}>{items.name}</h1>
+        <h1 className={styles.name}>{items.name}</h1>
         <div className={styles.container}>
           {items.products?.map((item) => (
             <CategoryItem key={item.id} {...item} product={item} />

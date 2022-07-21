@@ -44,8 +44,8 @@ export class CartPageItem extends Component {
       <div className={styles.cartPage_item}>
         <div className={styles.info}>
           <h3>{this.props.brand}</h3>
-          <h3 style={{ fontWeight: 400 }}>{this.props.name}</h3>
-          <h3 style={{ fontSize: 24 }}>
+          <h3 className={styles.name}>{this.props.name}</h3>
+          <h3 className={styles.price}>
             {currency.currency.symbol}
             {String(currency.amount * this.props.count).split('.')[0]}
           </h3>

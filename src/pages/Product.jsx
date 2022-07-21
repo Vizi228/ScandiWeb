@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { getCurrentAmount, onAddtoCart } from '../utils';
 import Attribute from '../components/Attribute';
 import { withRouter } from 'react-router-dom';
+import { sanitize } from 'dompurify';
 
 export class Product extends Component {
   constructor(props) {
@@ -26,19 +27,23 @@ export class Product extends Component {
   }
 
   async runQuery() {
-    const res = await this.props.client.query({
-      query: GET_PRODUCT(this.props.match.params.id),
-    });
-    const composeAttributes = res.data.product.attributes.map(() => 0);
-    this.setState((state) => {
-      return {
-        ...state,
-        product: res.data.product,
-        isLoading: res.loading,
-        activeAttribute: composeAttributes,
-      };
-    });
-    return res;
+    try {
+      const res = await this.props.client.query({
+        query: GET_PRODUCT(this.props.match.params.id),
+      });
+      const composeAttributes = res.data.product.attributes.map(() => 0);
+      this.setState((state) => {
+        return {
+          ...state,
+          product: res.data.product,
+          isLoading: res.loading,
+          activeAttribute: composeAttributes,
+        };
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }
   onHandleAttribute(id, index) {
     this.setState((state) => {
@@ -118,7 +123,7 @@ export class Product extends Component {
           </button>
           <p
             className={styles.desc}
-            dangerouslySetInnerHTML={{ __html: this.state.product.description }}></p>
+            dangerouslySetInnerHTML={{ __html: sanitize(this.state.product.description) }}></p>
         </div>
       </div>
     );

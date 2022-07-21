@@ -78,13 +78,7 @@ export class Product extends Component {
       <div className={styles.wrapper}>
         <div className={styles.images}>
           {this.state.product?.gallery?.map((item, i) => (
-            <img
-              onClick={() => this.onHandleImage(i)}
-              key={item}
-              style={{ width: 80 }}
-              src={item}
-              alt="item"
-            />
+            <img onClick={() => this.onHandleImage(i)} key={item} src={item} alt="item" />
           ))}
         </div>
         <div className={styles.mainImage}>
@@ -92,7 +86,7 @@ export class Product extends Component {
         </div>
         <div className={styles.description}>
           <h1>{productData.brand}</h1>
-          <h1 style={{ fontWeight: 400 }}>{productData.name}</h1>
+          <h1 className={styles.name}>{productData.name}</h1>
           {this.state.product.attributes.length > 0 ? (
             <div className={styles.attributes_wrapper}>
               <div className={styles.attributes}>
